@@ -1,0 +1,345 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>Kalanjali '12</title>
+        <meta name="keywords" content="" />
+        <meta name="description" content="" />
+        <link href="styles.css" rel="stylesheet" type="text/css" media="screen" />
+		<link rel="stylesheet" href="nivo-slider.css" type="text/css" media="screen" />
+		<script type="text/javascript" src="js/cufon-yui.js"></script>
+<script type="text/javascript" src="js/28_Days_Later_400.font.js"></script>
+<script type="text/javascript">
+    Cufon.replace("H1");
+	Cufon.replace("H2");
+	Cufon.replace("H3");
+	Cufon.replace("#top_padding a");
+	Cufon.replace("#menu a");
+	
+</script>
+
+
+<style type="text/css">				
+#holder {
+	position: relative;   /* leave as "relative" to keep timer centered on 
+				 your page, or change to "absolute" then change
+				 the values of the "top" and "left" properties to 
+				 position the timer */
+	top: 10px;            /* change to position the timer; must also change
+				 position to "absolute" above */
+	left: 0px;  	      /* change to position the timer; must also change
+				 position to "absolute" above */
+	width: 270px;
+	height: 60px;
+	border: none;
+	margin: 0px auto;
+}
+
+#title, #note {
+	color: lime;	      /* this determines the color of the DAYS, HRS, MIN, 
+				 SEC labels under the timer and the color of the 
+				 note that displays after reaching the target date
+				 and time; if using the blue digital images,
+				 change to #52C6FF; for the red images,
+				 change to #FF6666; for the white images,
+				 change to #BBBBBB; for the yellow images,
+				 change to #FFFF00 */
+}
+
+#note {
+	position: relative;
+	top: 6px;
+	height: 20px;
+	width: 260px;
+	margin: 0 auto;
+	padding: 0px;
+	text-align: center; 
+	font-family: Arial; 
+	font-size: 18px;
+	font-weight: bold;    /* options are normal, bold, bolder, lighter */
+	font-style: normal;   /* options are normal or italic */
+	z-index: 1;
+}
+
+.title {
+	border: none;
+	padding: 0px;
+	margin: 0px;
+	width: 30px;
+	text-align: center;
+	font-family: Arial;
+	font-size: 10px;
+	font-weight: normal;    /* options are normal, bold, bolder, lighter */
+	/*background-color:; */
+}
+
+#timer {
+	position: relative; 
+	top: 0px; 
+	left: 0px; 
+	margin: 5px auto; 
+	text-align: center; 
+	width: 260px;
+	height: 26px;
+	border: none;
+	padding: 20px 5px 20px 5px; 
+	background: transparent;      /* may change to another color, or to "transparent" */
+	border-radius: 20px;
+	box-shadow: 0 0 10px #000000;  /* change to "none" if you don't want a shadow */
+}
+</style>
+
+<script type="text/javascript">		
+/*
+Count down until any date script-
+By JavaScript Kit (www.javascriptkit.com)
+Over 200+ free scripts here!
+Modified by Robert M. Kuhnhenn, D.O. 
+(www.rmkwebdesign.com/Countdown_Timers/)
+on 5/30/2006 to count down to a specific date AND time,
+on 10/20/2007 to a new format, on 1/10/2010 to include
+time zone offset, and on 7/12/2012 to digital numbers.
+*/
+
+/*  
+CHANGE THE ITEMS BELOW TO CREATE YOUR COUNTDOWN TARGET DATE AND ANNOUNCEMENT 
+ONCE THE TARGET DATE AND TIME ARE REACHED.
+*/
+var note= "Kalanjali countdon";	/* -->Enter what you want the script to 
+				      display when the target date and time 
+				      are reached, limit to 25 characters */
+var year=2012;      /* -->Enter the count down target date YEAR */
+var month=09;       /* -->Enter the count down target date MONTH */
+var day=28;         /* -->Enter the count down target date DAY */
+var hour=09;         /* -->Enter the count down target date HOUR (24 hour clock) */
+var minute=00;      /* -->Enter the count down target date MINUTE */
+var tz=+5.5;          /* -->Offset for your timezone in hours from UTC (see 
+			  http://wwp.greenwichmeantime.com/index.htm to find 
+			  the timezone offset for your location) */
+
+//-->    DO NOT CHANGE THE CODE BELOW!    <--	
+d1 = new Image(); d1.src = "digital-numbers/1.png";
+d2 = new Image(); d2.src = "digital-numbers/2.png";
+d3 = new Image(); d3.src = "digital-numbers/3.png";
+d4 = new Image(); d4.src = "digital-numbers/4.png";
+d5 = new Image(); d5.src = "digital-numbers/5.png";
+d6 = new Image(); d6.src = "digital-numbers/6.png";
+d7 = new Image(); d7.src = "digital-numbers/7.png";
+d8 = new Image(); d8.src = "digital-numbers/8.png";
+d9 = new Image(); d9.src = "digital-numbers/9.png";
+d0 = new Image(); d0.src = "digital-numbers/0.png";
+bkgd = new Image(); bkgd.src = "digital-numbers/bkgd.gif";
+
+var montharray=new Array("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec");
+
+function countdown(yr,m,d,hr,min){
+	theyear=yr;themonth=m;theday=d;thehour=hr;theminute=min;
+	var today=new Date();
+	var todayy=today.getYear();
+	if (todayy < 1000) {todayy+=1900;}
+	var todaym=today.getMonth();
+	var todayd=today.getDate();
+	var todayh=today.getHours();
+	var todaymin=today.getMinutes();
+	var todaysec=today.getSeconds();
+	var todaystring1=montharray[todaym]+" "+todayd+", "+todayy+" "+todayh+":"+todaymin+":"+todaysec;
+	var todaystring=Date.parse(todaystring1)+(tz*1000*60*60);
+	var futurestring1=(montharray[m-1]+" "+d+", "+yr+" "+hr+":"+min);
+	var futurestring=Date.parse(futurestring1)-(today.getTimezoneOffset()*(1000*60));
+	var dd=futurestring-todaystring;
+	var dday=Math.floor(dd/(60*60*1000*24)*1);
+	var dhour=Math.floor((dd%(60*60*1000*24))/(60*60*1000)*1);
+	var dmin=Math.floor(((dd%(60*60*1000*24))%(60*60*1000))/(60*1000)*1);
+	var dsec=Math.floor((((dd%(60*60*1000*24))%(60*60*1000))%(60*1000))/1000*1);
+	if(dday<=0&&dhour<=0&&dmin<=0&&dsec<=0){
+		document.getElementById('note').innerHTML=note;
+		document.getElementById('note').style.display="block";
+		document.getElementById('countdown').style.display="none";
+		clearTimeout(startTimer);
+		return;
+	}
+	else {
+		document.getElementById('note').style.display="none";
+		document.getElementById('timer').style.display="block";
+		startTimer = setTimeout("countdown(theyear,themonth,theday,thehour,theminute)",500);
+	}
+	convert(dday,dhour,dmin,dsec);
+}
+
+function convert(d,h,m,s) {
+	if (!document.images) return;
+	if (d <= 9) {
+		document.images.day1.src = bkgd.src;
+		document.images.day2.src = bkgd.src;
+		document.images.day3.src = eval("d"+d+".src");
+		
+	}
+	else if (d <= 99) {
+		document.images.day1.src = d0.src;
+		document.images.day2.src = eval("d"+Math.floor(d/10)+".src");
+		document.images.day3.src = eval("d"+(d%10)+".src");
+	}
+	else {
+		document.images.day1.src = eval("d"+Math.floor(d/100)+".src");
+		var day = d.toString();
+		day = day.substr(1,1);
+		day = parseInt(day);
+		document.images.day2.src = eval("d"+day+".src");
+		document.images.day3.src = eval("d"+(d%10)+".src");
+	}
+	if (h <= 9) {
+		document.images.h1.src = d0.src;
+		document.images.h2.src = eval("d"+h+".src");
+	}
+	else {
+		document.images.h1.src = eval("d"+Math.floor(h/10)+".src");
+		document.images.h2.src = eval("d"+(h%10)+".src");
+	}
+	if (m <= 9) {
+		document.images.m1.src = d0.src;
+		document.images.m2.src = eval("d"+m+".src");
+	}
+	else {
+		document.images.m1.src = eval("d"+Math.floor(m/10)+".src");
+		document.images.m2.src = eval("d"+(m%10)+".src");
+	}
+	if (s <= 9) {
+		document.images.s1.src = d0.src;
+		document.images.s2.src = eval("d"+s+".src");
+	}
+	else {
+		document.images.s1.src = eval("d"+Math.floor(s/10)+".src");
+		document.images.s2.src = eval("d"+(s%10)+".src");
+	}
+}
+</script>
+    </head>
+    <body onload="countdown(year,month,day,hour,minute)" >
+		
+    	<div id="wrap">
+				<div id="menu">
+					<ul>
+						<li><a href="index.html" class="active">Home</a></li>
+						<li><a href="events.html">Events</a></li>
+						<li><a href="sponsor.html">Sponsors</a></li>
+						<li><a href="gallery.html">Gallery</a></li>
+						<li><a href="calendar.html">Calendar of Events</a></li>
+						<li><a href="reg1.html">Registration</a></li>
+						<li><a href="Contact_Us.html">Contact Us</a></li><a href="http://www.sirmvit.edu"><img src="logo.gif" class="img1"></a>
+					</ul>
+					
+				</div>	
+
+
+
+		<P> <div id="holder">
+	<div id="timer">
+		<div id="note"></div>
+		<div id="countdown">
+			<img height=21 src="digital-numbers/bkgd.gif" width=16 name="day1">
+			<img height=21 src="digital-numbers/bkgd.gif" width=16 name="day2">
+			<img height=21 src="digital-numbers/bkgd.gif" width=16 name="day3">
+			<img height=21 id="colon1" src="digital-numbers/colon.png" width=9 name="d1">
+			<img height=21 src="digital-numbers/bkgd.gif" width=16 name="h1">
+			<img height=21 src="digital-numbers/bkgd.gif" width=16 name="h2">
+			<img height=21 id="colon2" src="digital-numbers/colon.png" width=9 name="g1">
+			<img height=21 src="digital-numbers/bkgd.gif" width=16 name="m1">
+			<img height=21 src="digital-numbers/bkgd.gif" width=16 name="m2">
+			<img height=21 id="colon3" src="digital-numbers/colon.png" width=9 name="j1">
+			<img height=21 src="digital-numbers/bkgd.gif" width=16 name="s1">
+			<img height=21 src="digital-numbers/bkgd.gif" width=16 name="s2">
+			<div id="title">
+				<div class="title" style="position: absolute; top: 36px; left: 42px">DAYS</div>
+				<div class="title" style="position: absolute; top: 36px; left: 105px">HRS</div>
+				<div class="title" style="position: absolute; top: 36px; left: 156px">MIN</div>
+				<div class="title" style="position: absolute; top: 36px; left: 211px">SEC</div>
+			</div>
+		</div>
+	</div>
+</div>
+</p>	
+
+	<br>
+	
+				<br>
+						<h1><a href="index"><center>Kalanjali '12</a></center></h1>
+						<h2 size="1"><a href=""><center>Where Technology and Culture converge!</a></h2><br><br></center>
+				<div id="content_top"></div>
+				
+				<div id="content_bg_repeat">
+					
+					<div id="wrapper">
+							<div id="slider-wrapper">        
+								<div id="slider" class="nivoSlider">
+								    <img src="images/fir.JPG" alt="" />
+									<img src="images/thr.JPG" alt="" />
+								    <img src="images/dota.jpg" alt="" />
+									<img src="images/tech.JPG" alt="" />
+									<img src="images/header5.jpg" alt="" /></a>
+								</div>        
+							</div>
+					
+					</div>
+					
+					<script type="text/javascript" src="js/jquery-1.4.3.min.js"></script>
+						<script type="text/javascript" src="js/jquery.nivo.slider.pack.js"></script>
+						<script type="text/javascript">
+						$(window).load(function() {
+							$('#slider').nivoSlider();
+						});
+						</script>
+					
+					<div id="content">
+			<div class="col1">
+				<h2>Recent Updates</h2>
+				<font size ="3" color = "#2F8CA8">
+					<div class="left marg_right1"><a href="#"><img src="images/img2.jpg" alt="" /></a></div>
+					<p class="pad_bot1 pad_top1"><span class="color1">Sat, Sep 15, 2012</span></p>
+					<p>Prof. Krishne Gowda will be also be the Chief Guest on Day 2 of Kalanjali '12</p>
+					<a href="update2" class="button right">Read more</a><br><br>
+					<div class="left marg_right1"><a href="#"><img src="images/img1.jpg" alt="" /></a></div>
+					<p class="pad_bot1 pad_top1"><span class="color1">Wed, Sep 12, 2012</span></p>
+					<p>Anoor Ananthakrishna Sharma will be the Chief Guest on Day 2 of Kalanjali '12</p>
+					<a href="update1" class="button right">Read more</a><br><br>
+					
+				</font>
+       		</div>
+			<div class="col7">
+				<class="pad_bot1"><h2>Welcome to kalanjali '12</h2>
+				<p class="pad_bot3"><font size ="3" color = "#2F8CA8">Sir MVIT, Bengaluru has been conducting <i><b>Kalanjali</b></i> an annual intercollegiate cultural extravaganza successfully since the year 1996. Kalanjali has been setting the stage for student community to showcase their talents, innovations, creative zeal and zest. Kalanjali '12 is scheduled to be held on 28th and 29th of September 2012</font></p>
+				
+       		</div>
+		</div>
+					
+				</div>
+				<div id="content_bottom"></div>
+<div id="footer_top">
+<div id="footer_column1">
+<h2>Recent posts</h2>
+<div class="footer_text"><ul class="ls"><li>	<p><a href="media1">Dance prodigy in the making</a></li>
+<li>	<p><a href="media2">Car that delivers 240km/litre</a></li></ul></div>
+</div>
+<div id="footer_column2">
+<h2>Share with Others</h2>
+<div class="footer_text">
+<div class="foot_pad">
+<div class="link2"><a href="http://www.facebook.com/Kalanjali2012">Be a fan on Facebook</a></div>
+</div>
+</div>
+</div>
+<div id="footer_column3">
+<h2>Useful Resources</h2>
+<div class="footer_text">
+<div class="foot_pad">
+<ul class="ls"><li><a href="resource1">IEEE Formats for abstract and PPT</a></li>
+</ul>
+</div>
+<img alt="Website counter" hspace="0" vspace="0" border="0" src="http://www.rollingcounters.com/5884270-E2BC3BB2005A4C35BB46B4D1A80D22F0/counter.img?theme=34&digits=7&siteId=8"/>
+</div>
+</div>
+					<div class="clear"></div>
+				</div>
+			</div>
+			
+    </body>
+</html>
